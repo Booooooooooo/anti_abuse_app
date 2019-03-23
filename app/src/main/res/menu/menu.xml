@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="重心"
+        android:id="@+id/core_item"
+        android:icon="@drawable/core"/>
+    <item
+        android:icon="@drawable/heart"
+        android:id="@+id/heart_item"
+        android:title="心率"/>
+    <item
+        android:title="声音"
+        android:id="@+id/sound_item"
+        android:icon="@drawable/sound"/>
+    <item
+        android:icon="@drawable/user"
+        android:id="@+id/user_item"
+        android:title="我的"/>
+</menu>

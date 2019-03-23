@@ -1,94 +1,26 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/bottom_layout"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above = "@+id/bottom_navigation"/>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/core_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/core"
-            android:layout_weight="1"
-            android:text="重心" />
-
-        <Button
-            android:id="@+id/heart_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/heart"
-            android:layout_weight="1"
-            android:text="心率" />
-
-        <Button
-            android:id="@+id/sound_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/sound"
-            android:layout_weight="1"
-            android:text="声音" />
-
-        <Button
-            android:id="@+id/user_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/user"
-            android:layout_weight="1"
-            android:text="用户" />
-
-    </LinearLayout>
-
-    <LinearLayout
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/menu"/>
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:gravity="fill_vertical"
-        android:layout_above="@id/bottom_layout">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-193dp"
-            app:srcCompat="@drawable/normal" />
-
-        <TextView
-            android:id="@+id/displayView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="193dp"
-            android:text="心 率 正 常"
-            android:layout_gravity="center"
-            android:textSize="24sp" />
-        <TextView
-            android:id="@+id/data_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center_horizontal"
-            android:text="数据"/>
-
-        <lecho.lib.hellocharts.view.LineChartView
-            android:id="@+id/line_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill_vertical" />
-
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+        android:layout_height="5dp"
+        android:layout_above="@id/bottom_navigation"/>
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+</android.support.constraint.ConstraintLayout>
