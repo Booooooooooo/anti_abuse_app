@@ -3,17 +3,21 @@
     <item
         android:title="重心"
         android:id="@+id/core_item"
-        android:icon="@drawable/core"/>
+        android:icon="@drawable/core"
+        android:orderInCategory="0"/>
     <item
         android:icon="@drawable/heart"
         android:id="@+id/heart_item"
+        android:orderInCategory="1"
         android:title="心率"/>
     <item
         android:title="声音"
         android:id="@+id/sound_item"
+        android:orderInCategory="2"
         android:icon="@drawable/sound"/>
     <item
         android:icon="@drawable/user"
         android:id="@+id/user_item"
+        android:orderInCategory="3"
         android:title="我的"/>
 </menu>
