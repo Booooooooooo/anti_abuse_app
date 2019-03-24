@@ -1,5 +1,7 @@
 package com.example.wyb.anti_abuse;
 
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,12 +12,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +49,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         bindView();
+        disableShiftMode();
 
-//
-//
-//        RoundImageView user_image(RoundImageView)findViewById(R.id.user_img);
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.user);
-//        user_image.setmBitmap(bitmap);
+
+
     }
 
     private void bindView(){
@@ -88,5 +90,22 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
-
+    private void disableShiftMode(){
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView)bottomNavigationView.getChildAt(0);
+        try{
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+            for(int i = 0; i < menuView.getChildCount(); i++){
+                BottomNavigationItemView item = (BottomNavigationItemView)menuView.getChildAt(i);
+                item.setShiftingMode(false);
+                item.setChecked(item.getItemData().isChecked());
+            }
+        }catch (NoSuchFieldException e){
+            Log.e("BNVHelper", "Unable to get shift mode field", e);
+        }catch(IllegalAccessException e){
+            Log.e("BNVHelper", "Unable to change value of shift mode", e);
+        }
+    }
 }
