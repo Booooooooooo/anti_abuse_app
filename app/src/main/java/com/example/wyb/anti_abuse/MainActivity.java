@@ -57,50 +57,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         bindView();
         disableShiftMode();
 
-        sendRequestWithOkHttp();
+
 
     }
 
-    private void sendRequestWithOkHttp() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder()
-                            .url("http://47.102.151.34:8000/iscry?currentStamp=4534545&startStamp=42524525")
-                            .build();
-                    Response response = client.newCall(request).execute();
-                    String responseData = response.body().string();
-                    parseJSONWithJSONObject(responseData);
-                }catch (Exception e){
-                    Log.d("SoundFragment", "error1");
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void parseJSONWithJSONObject(String jsonData){
-        try{
-            JSONObject jsonObject = new JSONObject(jsonData);
-            String currentstamp = jsonObject.getString("currentStamp");
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("data"));
-            String startStamp = jsonObject.getString("startStamp");
-            Log.d("SoundFragment", "currentStamp: " + currentstamp);
-            Log.d("SoundFragment", "startStamp: " + startStamp);
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject dataObject = jsonArray.getJSONObject(i);
-                String result = dataObject.getString("result");
-                String stamp = dataObject.getString("stamp");
-                Log.d("SoundFragment", "result: " + result);
-                Log.d("SoundFragment", "stamp:" + stamp);
-            }
-        }catch (Exception e){
-            Log.d("SoundFragment", "error2");
-            e.printStackTrace();
-        }
-    }
 
     private void bindView(){
         viewPager = (ViewPager)findViewById(R.id.viewPager);
