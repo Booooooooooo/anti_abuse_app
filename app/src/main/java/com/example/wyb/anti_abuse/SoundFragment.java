@@ -55,7 +55,7 @@ public class SoundFragment extends Fragment {
         view = inflater.inflate(R.layout.sound_layout, container, false);
 
         //initTest();
-        initSound();
+        //initSound();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_list_item_1, array
         );
@@ -72,7 +72,7 @@ public class SoundFragment extends Fragment {
         array.add("ListView");
     }
 
-    private void initSound(){
+    public void initSound(){
         //data = new String[maxdata];
         String address = "http://47.102.151.34:8000/iscry?currentStamp=4534545&startStamp=42524525";
         HttpUtil.sendOkHttpRequest(address, new okhttp3.Callback(){

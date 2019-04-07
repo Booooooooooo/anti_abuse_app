@@ -23,6 +23,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         coreFragment = new CoreFragment();
         heartFragment = new HeartFragment();
         soundFragment = new SoundFragment();
+        soundFragment.initSound();
         userFragment = new UserFragment();
     }
 
