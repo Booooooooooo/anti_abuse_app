@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Call;
@@ -37,6 +39,7 @@ public class SoundFragment extends Fragment {
     private Context context;
     public RecyclerView recyclerView;
     private SoundAdapter soundAdapter;
+    private ListView listView;
     private List<SoundItem> soundList = new ArrayList<>();
     private ArrayAdapter<String> adapter;
 
@@ -61,9 +64,10 @@ public class SoundFragment extends Fragment {
         adapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_list_item_1, array
         );
-//        SoundListAdapter adapter = new SoundListAdapter(context, R.layout.sound_item_layout, soundList);
-        ListView listView = (ListView)view.findViewById(R.id.list_view);
+        //SoundListAdapter adapter = new SoundListAdapter(context, R.layout.sound_item_layout, soundList);
+        listView = (ListView)view.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+        //setListViewHeightBaseOnChildren(listView, 30);
         getData();
         return view;
     }
@@ -91,13 +95,6 @@ public class SoundFragment extends Fragment {
                 Log.d("SoundFragment", "error3");
             }
         });
-//        soundList.add(new SoundItem("2019-03-22", "17:00"));
-//        soundList.add(new SoundItem("2019-03-22", "17:32"));
-//        soundList.add(new SoundItem());
-//        soundList.add(new SoundItem());
-        /*if(datanum < maxdata){
-            data[datanum++] = "无数据";
-        }*/
     }
 
     private void getData() {
@@ -108,7 +105,9 @@ public class SoundFragment extends Fragment {
                 initSound();
                 Log.d("SoundFragment", "refreshed");
                 handler.postDelayed(this, 2000);
+                Collections.reverse(array);
                 adapter.notifyDataSetChanged();
+                //setListViewHeightBaseOnChildren(listView, 30);
             }
         };
         runnable.run();
@@ -126,9 +125,10 @@ public class SoundFragment extends Fragment {
                 JSONObject dataObject = jsonArray.getJSONObject(i);
                 String result = dataObject.getString("result");
                 String stamp = dataObject.getString("stamp");
-                array.add("日期"+stamp+result);
-                //data[datanum++] = "日期"+stamp+result;
-                //soundList.add(new SoundItem("日期", stamp, result));
+                if(array.size() > maxdata){
+                    array.remove(0);
+                }
+                array.add("日期"+stamp+result+(datanum++));
                 Log.d("SoundFragment", "result: " + result);
                 Log.d("SoundFragment", "stamp:" + stamp);
             }
@@ -136,6 +136,30 @@ public class SoundFragment extends Fragment {
             Log.d("SoundFragment", "error2");
             e.printStackTrace();
         }
+    }
+
+    private void setListViewHeightBaseOnChildren(ListView listview, int maxCount){
+        ListAdapter listAdapter = listview.getAdapter();
+        if(listAdapter == null){
+            return;
+        }
+        int totalHeight = 0;
+        ViewGroup.LayoutParams params = listview.getLayoutParams();
+        if(listAdapter.getCount() > maxCount){
+            for(int i = 0; i < maxCount; i++){
+                View listItem = listAdapter.getView(i, null, listview);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+        }else{
+            for(int i = 0; i < listAdapter.getCount(); i++){
+                View listItem = listAdapter.getView(i, null, listview);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+            params.height = totalHeight + (listview.getDividerHeight() * (listAdapter.getCount() - 1));
+        }
+        listview.setLayoutParams(params);
     }
 
 //    private void initRecyclerView(){

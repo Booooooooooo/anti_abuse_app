@@ -31,4 +31,6 @@ public class SoundListAdapter extends ArrayAdapter<SoundItem> {
         result.setText(sound.getResult());
         return view;
     }
+
+
 }
