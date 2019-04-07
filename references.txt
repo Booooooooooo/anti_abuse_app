@@ -7,3 +7,6 @@ http://www.runoob.com/w3cnote/android-tutorial-imageview.html
 源码
 https://github.com/vinc3m1/RoundedImageView
 https://github.com/hdodenhof/CircleImageView
+
+异步加载数据
+https://blog.csdn.net/XSF50717/article/details/49024075

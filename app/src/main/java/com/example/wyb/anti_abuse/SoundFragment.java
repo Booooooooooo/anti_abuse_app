@@ -1,6 +1,7 @@
 package com.example.wyb.anti_abuse;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,6 +38,7 @@ public class SoundFragment extends Fragment {
     public RecyclerView recyclerView;
     private SoundAdapter soundAdapter;
     private List<SoundItem> soundList = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
     private String[] testdata = {"a", "b", "c", "I hate listveiw", "I hate recyclerview"};
     private final ArrayList<String> array = new ArrayList<String>();
@@ -56,12 +58,13 @@ public class SoundFragment extends Fragment {
 
         //initTest();
         //initSound();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        adapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_list_item_1, array
         );
 //        SoundListAdapter adapter = new SoundListAdapter(context, R.layout.sound_item_layout, soundList);
         ListView listView = (ListView)view.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+        getData();
         return view;
     }
 
@@ -95,6 +98,20 @@ public class SoundFragment extends Fragment {
         /*if(datanum < maxdata){
             data[datanum++] = "无数据";
         }*/
+    }
+
+    private void getData() {
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                initSound();
+                Log.d("SoundFragment", "refreshed");
+                handler.postDelayed(this, 2000);
+                adapter.notifyDataSetChanged();
+            }
+        };
+        runnable.run();
     }
 
     private void parseJSONWithJSONObject(String jsonData){
