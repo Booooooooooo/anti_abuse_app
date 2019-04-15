@@ -1,10 +1,18 @@
 package com.example.wyb.anti_abuse;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,10 +45,7 @@ public class SoundFragment extends Fragment {
     //private GetSounds getSounds;
     private View view;
     private Context context;
-    public RecyclerView recyclerView;
-    private SoundAdapter soundAdapter;
     private ListView listView;
-    private List<SoundItem> soundList = new ArrayList<>();
     private ArrayAdapter<String> adapter;
 
     private String[] testdata = {"a", "b", "c", "I hate listveiw", "I hate recyclerview"};
@@ -59,28 +64,17 @@ public class SoundFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sound_layout, container, false);
 
-        //initTest();
-        //initSound();
         adapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_list_item_1, array
         );
-        //SoundListAdapter adapter = new SoundListAdapter(context, R.layout.sound_item_layout, soundList);
         listView = (ListView)view.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
-        //setListViewHeightBaseOnChildren(listView, 30);
         getData();
+
         return view;
     }
 
-    private void initTest(){
-        array.add("wushuju");
-        array.add("无数据");
-        array.add("去你的");
-        array.add("ListView");
-    }
-
     public void initSound(){
-        //data = new String[maxdata];
         String address = "http://47.102.151.34:8000/iscry?currentStamp=4534545&startStamp=42524525";
         HttpUtil.sendOkHttpRequest(address, new okhttp3.Callback(){
             @Override
@@ -137,39 +131,6 @@ public class SoundFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
-    private void setListViewHeightBaseOnChildren(ListView listview, int maxCount){
-        ListAdapter listAdapter = listview.getAdapter();
-        if(listAdapter == null){
-            return;
-        }
-        int totalHeight = 0;
-        ViewGroup.LayoutParams params = listview.getLayoutParams();
-        if(listAdapter.getCount() > maxCount){
-            for(int i = 0; i < maxCount; i++){
-                View listItem = listAdapter.getView(i, null, listview);
-                listItem.measure(0, 0);
-                totalHeight += listItem.getMeasuredHeight();
-            }
-        }else{
-            for(int i = 0; i < listAdapter.getCount(); i++){
-                View listItem = listAdapter.getView(i, null, listview);
-                listItem.measure(0, 0);
-                totalHeight += listItem.getMeasuredHeight();
-            }
-            params.height = totalHeight + (listview.getDividerHeight() * (listAdapter.getCount() - 1));
-        }
-        listview.setLayoutParams(params);
-    }
-
-//    private void initRecyclerView(){
-//        //recyclerView = (RecyclerView)view.findViewById(R.id.sound_records);
-//        soundAdapter = new SoundAdapter(getActivity(), soundList);
-//        recyclerView.setAdapter(soundAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-//    }
-
 
 
 }

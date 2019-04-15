@@ -54,4 +54,6 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
     public int getItemCount(){
         return mSoundList.size();
     }
+
+
 }

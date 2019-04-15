@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
 public class UserFragment extends Fragment{
 
@@ -19,7 +20,8 @@ public class UserFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.user_layout, container, false);
         RoundImageView user_image = (RoundImageView)view.findViewById(R.id.user_img);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.user);
+        CalendarView calendarView = (CalendarView)view.findViewById(R.id.calendar);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.boy);
         user_image.setmBitmap(bitmap);
 
         return view;
